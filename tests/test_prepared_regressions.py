@@ -81,3 +81,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.user(2, username="second")
         self.assertEqual([u["username"] for u in self.rows("SELECT * FROM users ORDER BY user_id")], ["first", "second"])
 
+    def test_007(self):
+        self.user(2**40)
+        self.assertEqual(self.rows("SELECT user_id FROM users")[0]["user_id"], 2**40)
+
