@@ -569,3 +569,10 @@ class PreparedRegressionTests(unittest.TestCase):
                 self.client.get_updates(None)
         self.assertLess(len(str(error.exception)), 350)
 
+    def test_096(self):
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {"QUEUE_TEST_VALUE": "outside"}):
+            path = Path(directory)/".env"
+            path.write_text("QUEUE_TEST_VALUE=inside", encoding="utf-8")
+            load_env(str(path))
+            self.assertEqual(os.environ["QUEUE_TEST_VALUE"], "outside")
+
