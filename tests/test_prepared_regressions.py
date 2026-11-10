@@ -417,3 +417,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.draw(approve=True)
         self.assertEqual(self.db.expire_claims(self.now + timedelta(hours=23), "билеты"), 0)
 
+    def test_069(self):
+        draw = self.draw(approve=True)
+        uid = self.rows("SELECT user_id FROM claims")[0]["user_id"]
+        self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now)
+        self.db.submit_consent(draw, uid, True, self.now)
+        self.assertEqual(self.db.expire_claims(self.now + timedelta(hours=25), "билеты"), 0)
+
