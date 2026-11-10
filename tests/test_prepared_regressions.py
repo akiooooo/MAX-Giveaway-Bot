@@ -268,3 +268,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.user()
         self.assertEqual(self.db.get_user_progress(1, 10), {"chances": 0, "days": [], "partners": [], "remaining": 10})
 
+    def test_041(self):
+        self.user()
+        with self.db.transaction() as conn:
+            conn.executemany("INSERT INTO activity_days VALUES(?,?,?,'promo',?)", [(1, f"2026-10-{d:02}", self.partner, self.now.isoformat()) for d in range(1, 15)])
+        progress = self.db.get_user_progress(1, 10)
+        self.assertEqual((progress["chances"], len(progress["days"]), progress["remaining"]), (10, 10, 0))
+
