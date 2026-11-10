@@ -562,3 +562,10 @@ class PreparedRegressionTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.client.get_updates(None)
 
+    def test_095(self):
+        response = Mock(ok=False, status_code=500, text="x"*10000)
+        with patch.object(self.client.session, "request", return_value=response):
+            with self.assertRaises(MaxApiError) as error:
+                self.client.get_updates(None)
+        self.assertLess(len(str(error.exception)), 350)
+
