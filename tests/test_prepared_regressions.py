@@ -54,3 +54,8 @@ class PreparedRegressionTests(unittest.TestCase):
     def test_001(self):
         self.assertEqual(self.now.utcoffset(), timedelta(hours=3))
 
+    def test_002(self):
+        self.assertTrue(self.user())
+        self.assertFalse(self.user())
+        self.assertEqual(len(self.rows("SELECT * FROM users")), 1)
+
