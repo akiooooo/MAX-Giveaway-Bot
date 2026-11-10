@@ -392,3 +392,10 @@ class PreparedRegressionTests(unittest.TestCase):
         claim = self.rows("SELECT * FROM claims")[0]
         self.assertEqual((claim["status"], claim["consent"]), ("declined", 0))
 
+    def test_065(self):
+        draw, uid = self.claim()
+        self.db.set_user_state(uid, "claim_name", {"draw_id": draw}, self.now)
+        self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now)
+        self.db.submit_consent(draw, uid, True, self.now)
+        self.assertIsNone(self.db.get_user_state(uid))
+
