@@ -318,3 +318,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.get_queued_notifications(), [])
         self.assertEqual(self.rows("SELECT * FROM claims"), [])
 
+    def test_050(self):
+        self.draw()
+        with self.assertRaises(ValueError):
+            self.db.create_daily_draw(self.now.date(), self.now, random.Random(1))
+
