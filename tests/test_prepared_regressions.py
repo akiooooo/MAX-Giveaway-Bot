@@ -294,3 +294,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.request_promo(1, self.partner, self.now)
         self.assertFalse(self.db.is_participant(1, self.partner))
 
+    def test_045(self):
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.register_participation(999, self.partner, self.now)
+
