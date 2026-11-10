@@ -544,3 +544,9 @@ class PreparedRegressionTests(unittest.TestCase):
             self.client.answer_callback("callback-1", "Ответ", buttons)
         self.assertEqual(call.call_args.kwargs["json"]["message"]["attachments"][0]["payload"]["buttons"], buttons)
 
+    def test_092(self):
+        response = Mock(ok=False, status_code=503, text="Unavailable")
+        with patch.object(self.client.session, "request", return_value=response):
+            with self.assertRaisesRegex(MaxApiError, "503"):
+                self.client.get_updates(None)
+
