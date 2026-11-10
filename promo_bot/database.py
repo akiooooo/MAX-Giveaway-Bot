@@ -578,7 +578,7 @@ class Database:
             dict(row) for row in conn.execute(
                 """
                 SELECT p.slug, p.name, p.campaign_day,
-                    SUM(CASE WHEN pc.id IS NOT NULL AND pc.assigned_user_id IS NULL THEN 1 ELSE 0 END) AS promos_left,
+                    COUNT(DISTINCT CASE WHEN pc.assigned_user_id IS NULL THEN pc.id END) AS promos_left,
                     COUNT(DISTINCT part.user_id) AS participants
                 FROM partners p LEFT JOIN promo_codes pc ON pc.partner_id = p.id
                 LEFT JOIN participations part ON part.partner_id = p.id

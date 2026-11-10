@@ -225,3 +225,11 @@ class PreparedRegressionTests(unittest.TestCase):
             self.db.request_promo(999, self.partner, self.now)
         self.assertIsNone(self.rows("SELECT * FROM promo_codes")[0]["assigned_user_id"])
 
+    def test_034(self):
+        self.db.add_promo_codes("shop", ["A", "B", "C"])
+        for uid in (1, 2):
+            self.user(uid)
+            self.db.register_participation(uid, self.partner, self.now)
+        partner = self.db.get_stats(self.now.date())["partners"][0]
+        self.assertEqual((partner["promos_left"], partner["participants"]), (3, 2))
+
