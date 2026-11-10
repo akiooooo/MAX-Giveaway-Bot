@@ -96,3 +96,11 @@ class PreparedRegressionTests(unittest.TestCase):
         self.user(1)
         self.assertEqual(self.db.get_stats(self.now.date())["total_users"], 2)
 
+    def test_010(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)/"nested"/"bot.db"
+            db = Database(str(path))
+            db.upsert_user({"user_id": 8}, self.now)
+            self.assertTrue(path.is_file())
+            db.close()
+
