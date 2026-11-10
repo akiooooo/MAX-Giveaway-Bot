@@ -135,3 +135,7 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(sqlite3.IntegrityError):
             self.db.add_partner({**self.partner_data, "campaign_day": "2026-11-02"})
 
+    def test_017(self):
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.add_partner({**self.partner_data, "slug": "new", "campaign_day": "2026-11-02", "winner_count": 0})
+
