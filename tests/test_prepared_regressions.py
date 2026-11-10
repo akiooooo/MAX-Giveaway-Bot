@@ -143,3 +143,9 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(sqlite3.IntegrityError):
             self.db.add_partner({**self.partner_data, "slug": "new", "campaign_day": "2026-11-02", "claim_hours": 0})
 
+    def test_019(self):
+        data = {**self.partner_data, "slug": "new", "campaign_day": "2026-11-02"}
+        del data["claim_hours"]
+        self.db.add_partner(data)
+        self.assertEqual(self.db.get_partner_for_day(date(2026, 11, 2))["claim_hours"], 24)
+
