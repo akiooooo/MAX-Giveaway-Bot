@@ -313,3 +313,8 @@ class PreparedRegressionTests(unittest.TestCase):
         chosen = [e["user_id"] for e in draw["entries"] if e["role"] in ("winner", "reserve")]
         self.assertEqual(len(chosen), len(set(chosen)))
 
+    def test_049(self):
+        self.draw()
+        self.assertEqual(self.db.get_queued_notifications(), [])
+        self.assertEqual(self.rows("SELECT * FROM claims"), [])
+
