@@ -104,3 +104,13 @@ class PreparedRegressionTests(unittest.TestCase):
             self.assertTrue(path.is_file())
             db.close()
 
+    def test_011(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = str(Path(directory)/"bot.db")
+            first = Database(path)
+            first.upsert_user({"user_id": 8}, self.now)
+            first.close()
+            second = Database(path)
+            self.assertEqual(second.get_stats(self.now.date())["total_users"], 1)
+            second.close()
+
