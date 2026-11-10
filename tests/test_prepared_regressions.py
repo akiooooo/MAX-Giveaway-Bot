@@ -149,3 +149,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.add_partner(data)
         self.assertEqual(self.db.get_partner_for_day(date(2026, 11, 2))["claim_hours"], 24)
 
+    def test_020(self):
+        self.db.add_partner({**self.partner_data, "slug": "early", "campaign_day": "2026-10-31"})
+        self.assertEqual([p["slug"] for p in self.db.get_stats(self.now.date())["partners"]], ["early", "shop"])
+
