@@ -424,3 +424,9 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.submit_consent(draw, uid, True, self.now)
         self.assertEqual(self.db.expire_claims(self.now + timedelta(hours=25), "билеты"), 0)
 
+    def test_070(self):
+        self.draw(approve=True)
+        later = self.now + timedelta(hours=25)
+        self.assertEqual(self.db.expire_claims(later, "билеты"), 1)
+        self.assertEqual(self.db.expire_claims(later, "билеты"), 0)
+
