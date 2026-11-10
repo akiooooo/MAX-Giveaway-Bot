@@ -380,3 +380,8 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now + timedelta(hours=25))
 
+    def test_063(self):
+        draw, uid = self.claim()
+        with self.assertRaises(ValueError):
+            self.db.submit_consent(draw, uid, True, self.now)
+
