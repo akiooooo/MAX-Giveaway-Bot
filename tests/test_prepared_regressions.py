@@ -430,3 +430,9 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.expire_claims(later, "билеты"), 1)
         self.assertEqual(self.db.expire_claims(later, "билеты"), 0)
 
+    def test_071(self):
+        self.user(1)
+        self.user(2)
+        self.assertEqual(self.db.queue_push("Новость", self.now), 2)
+        self.assertEqual(len(self.db.get_queued_notifications()), 2)
+
