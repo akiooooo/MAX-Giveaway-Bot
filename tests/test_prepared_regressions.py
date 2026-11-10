@@ -327,3 +327,8 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.create_daily_draw(date(2026, 12, 1), self.now, random.Random(1))
 
+    def test_052(self):
+        draw = self.draw(approve=True)
+        self.assertEqual(self.db.approve_draw(draw, self.now, "билеты"), 0)
+        self.assertEqual(len(self.db.get_queued_notifications()), 1)
+
