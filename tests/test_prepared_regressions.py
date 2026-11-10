@@ -517,3 +517,7 @@ class PreparedRegressionTests(unittest.TestCase):
             self.assertTrue(self.client.is_channel_member(-1001, 7))
             self.assertFalse(self.client.is_channel_member(-1001, 9))
 
+    def test_087(self):
+        with patch.object(self.client, "_request", return_value={}):
+            self.assertFalse(self.client.is_channel_member(-1001, 7))
+
