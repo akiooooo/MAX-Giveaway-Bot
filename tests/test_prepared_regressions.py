@@ -188,3 +188,10 @@ class PreparedRegressionTests(unittest.TestCase):
         result = self.db.request_promo(2, self.partner, self.now)
         self.assertEqual((result.status, result.code), ("exhausted", None))
 
+    def test_028(self):
+        self.user()
+        self.db.add_promo_codes("shop", ["A", "B"])
+        self.db.request_promo(1, self.partner, self.now)
+        result = self.db.request_promo(1, self.partner, self.now)
+        self.assertEqual((result.status, result.code), ("existing", "A"))
+
