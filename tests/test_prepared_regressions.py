@@ -466,3 +466,9 @@ class PreparedRegressionTests(unittest.TestCase):
         row = self.rows("SELECT * FROM notifications")[0]
         self.assertEqual((row["status"], row["sent_at"], row["error"]), ("failed", None, "network down"))
 
+    def test_077(self):
+        self.user()
+        self.db.queue_push("Новость", self.now)
+        self.db.mark_notification(1, False, self.now, "x"*1000)
+        self.assertEqual(len(self.rows("SELECT error FROM notifications")[0]["error"]), 500)
+
