@@ -369,3 +369,9 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(set(selected), {1, 2})
         self.assertEqual(len(selected), 2)
 
+    def test_061(self):
+        draw, _ = self.claim()
+        self.user(2)
+        with self.assertRaises(ValueError):
+            self.db.save_claim_name(draw, 2, "Иван", "Петров", self.now)
+
