@@ -597,3 +597,7 @@ class PreparedRegressionTests(unittest.TestCase):
             load_env(str(path))
             self.assertEqual(os.environ["QUEUE_TEST_VALUE"], "Привет")
 
+    def test_100(self):
+        with tempfile.TemporaryDirectory() as directory:
+            load_env(str(Path(directory)/"missing.env"))
+
