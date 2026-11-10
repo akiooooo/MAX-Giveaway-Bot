@@ -76,3 +76,8 @@ class PreparedRegressionTests(unittest.TestCase):
         row = self.rows("SELECT * FROM users")[0]
         self.assertEqual((row["first_name"], row["last_name"]), ("Алёна", "О'Коннор"))
 
+    def test_006(self):
+        self.user(1, username="first")
+        self.user(2, username="second")
+        self.assertEqual([u["username"] for u in self.rows("SELECT * FROM users ORDER BY user_id")], ["first", "second"])
+
