@@ -406,3 +406,10 @@ class PreparedRegressionTests(unittest.TestCase):
             self.db.submit_consent(draw, uid, True, self.now + timedelta(hours=25))
         self.assertEqual(self.rows("SELECT status FROM claims")[0]["status"], "waiting")
 
+    def test_067(self):
+        draw, uid = self.claim()
+        self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now)
+        self.db.submit_consent(draw, uid, True, self.now)
+        with self.assertRaises(ValueError):
+            self.db.submit_consent(draw, uid, True, self.now)
+
