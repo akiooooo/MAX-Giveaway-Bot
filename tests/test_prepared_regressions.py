@@ -157,3 +157,7 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown partner"):
             self.db.add_promo_codes("missing", ["A"])
 
+    def test_022(self):
+        self.db.add_promo_codes("shop", ["  CODE-1  "])
+        self.assertEqual(self.rows("SELECT code FROM promo_codes")[0]["code"], "CODE-1")
+
