@@ -288,3 +288,9 @@ class PreparedRegressionTests(unittest.TestCase):
                 conn.execute("INSERT INTO activity_days VALUES(?,?,?,'promo',?)", (1, day, self.partner, self.now.isoformat()))
         self.assertEqual(self.db.get_user_progress(1, 10)["days"], ["2026-10-01", "2026-10-02", "2026-10-03"])
 
+    def test_044(self):
+        self.user()
+        self.db.add_promo_codes("shop", ["A"])
+        self.db.request_promo(1, self.partner, self.now)
+        self.assertFalse(self.db.is_participant(1, self.partner))
+
