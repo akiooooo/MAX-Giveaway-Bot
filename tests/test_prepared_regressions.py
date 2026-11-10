@@ -399,3 +399,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.submit_consent(draw, uid, True, self.now)
         self.assertIsNone(self.db.get_user_state(uid))
 
+    def test_066(self):
+        draw, uid = self.claim()
+        self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now)
+        with self.assertRaisesRegex(ValueError, "deadline"):
+            self.db.submit_consent(draw, uid, True, self.now + timedelta(hours=25))
+        self.assertEqual(self.rows("SELECT status FROM claims")[0]["status"], "waiting")
+

@@ -488,10 +488,12 @@ class Database:
     def submit_consent(self, draw_id: int, user_id: int, consent: bool, now: datetime) -> None:
         with self.transaction() as conn:
             claim = conn.execute(
-                "SELECT first_name, last_name, status FROM claims WHERE draw_id = ? AND user_id = ?", (draw_id, user_id)
+                "SELECT first_name, last_name, status, deadline_at FROM claims WHERE draw_id = ? AND user_id = ?", (draw_id, user_id)
             ).fetchone()
             if not claim or claim["status"] != "waiting" or not claim["first_name"] or not claim["last_name"]:
                 raise ValueError("contact data is incomplete")
+            if datetime.fromisoformat(claim["deadline_at"]) < now:
+                raise ValueError("claim deadline has passed")
             conn.execute(
                 "UPDATE claims SET consent = ?, status = ?, submitted_at = ? WHERE draw_id = ? AND user_id = ?",
                 (int(consent), "submitted" if consent else "declined", now.isoformat(), draw_id, user_id),
