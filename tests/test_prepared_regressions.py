@@ -168,3 +168,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.add_promo_codes("shop", ["A", "A"]), 1)
         self.assertEqual(self.db.add_promo_codes("shop", ["A", "B"]), 1)
 
+    def test_025(self):
+        self.db.add_partner({**self.partner_data, "slug": "other", "campaign_day": "2026-11-02"})
+        self.assertEqual(self.db.add_promo_codes("shop", ["A"]), 1)
+        self.assertEqual(self.db.add_promo_codes("other", ["A"]), 1)
+
