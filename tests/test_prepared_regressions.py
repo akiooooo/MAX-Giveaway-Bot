@@ -538,3 +538,9 @@ class PreparedRegressionTests(unittest.TestCase):
         attachments = call.call_args.kwargs["json"]["attachments"]
         self.assertEqual([a["type"] for a in attachments], ["image", "inline_keyboard"])
 
+    def test_091(self):
+        buttons = [[{"type": "callback", "text": "Меню", "payload": "menu:how"}]]
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.answer_callback("callback-1", "Ответ", buttons)
+        self.assertEqual(call.call_args.kwargs["json"]["message"]["attachments"][0]["payload"]["buttons"], buttons)
+
