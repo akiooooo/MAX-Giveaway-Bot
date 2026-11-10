@@ -208,3 +208,8 @@ class PreparedRegressionTests(unittest.TestCase):
             self.db.request_promo(1, self.partner, self.now)
         self.assertEqual(self.db.get_stats(self.now.date())["promo_requests"], 3)
 
+    def test_031(self):
+        self.user()
+        self.db.request_promo(1, self.partner, self.now)
+        self.assertEqual(self.db.get_user_progress(1, 10)["chances"], 0)
+
