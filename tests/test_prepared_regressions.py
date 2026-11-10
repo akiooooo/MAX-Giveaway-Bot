@@ -281,3 +281,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.register_participation(1, self.partner, self.now)
         self.assertEqual(self.db.get_user_progress(2, 10)["chances"], 0)
 
+    def test_043(self):
+        self.user()
+        with self.db.transaction() as conn:
+            for day in ("2026-10-03", "2026-10-01", "2026-10-02"):
+                conn.execute("INSERT INTO activity_days VALUES(?,?,?,'promo',?)", (1, day, self.partner, self.now.isoformat()))
+        self.assertEqual(self.db.get_user_progress(1, 10)["days"], ["2026-10-01", "2026-10-02", "2026-10-03"])
+
