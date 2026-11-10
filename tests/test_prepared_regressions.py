@@ -555,3 +555,10 @@ class PreparedRegressionTests(unittest.TestCase):
             with self.assertRaises(requests.Timeout):
                 self.client.get_updates(None)
 
+    def test_094(self):
+        response = Mock(ok=True)
+        response.json.side_effect = ValueError("bad JSON")
+        with patch.object(self.client.session, "request", return_value=response):
+            with self.assertRaises(ValueError):
+                self.client.get_updates(None)
+
