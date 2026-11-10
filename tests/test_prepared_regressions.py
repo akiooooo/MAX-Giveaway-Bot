@@ -493,3 +493,7 @@ class PreparedRegressionTests(unittest.TestCase):
     def test_081(self):
         self.assertEqual(self.client.base_url, "https://example.test")
 
+    def test_082(self):
+        self.assertEqual(self.client.session.headers["Authorization"], "test-token")
+        self.assertNotIn("test-token", self.client.base_url)
+
