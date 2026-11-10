@@ -298,3 +298,7 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(sqlite3.IntegrityError):
             self.db.register_participation(999, self.partner, self.now)
 
+    def test_046(self):
+        draw = self.db.get_draw(self.draw(0))
+        self.assertEqual((draw["participant_count"], draw["winner_count"], draw["entries"]), (0, 0, []))
+
