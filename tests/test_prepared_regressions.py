@@ -264,3 +264,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.register_participation(1, self.partner, self.now)
         self.assertEqual(self.db.get_user_progress(1, 10)["partners"], ["Магазин"])
 
+    def test_040(self):
+        self.user()
+        self.assertEqual(self.db.get_user_progress(1, 10), {"chances": 0, "days": [], "partners": [], "remaining": 10})
+
