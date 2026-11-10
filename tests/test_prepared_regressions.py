@@ -302,3 +302,9 @@ class PreparedRegressionTests(unittest.TestCase):
         draw = self.db.get_draw(self.draw(0))
         self.assertEqual((draw["participant_count"], draw["winner_count"], draw["entries"]), (0, 0, []))
 
+    def test_047(self):
+        with self.db.transaction() as conn:
+            conn.execute("UPDATE partners SET winner_count=5")
+        draw = self.db.get_draw(self.draw(2))
+        self.assertEqual((draw["winner_count"], draw["reserve_count"]), (2, 0))
+
