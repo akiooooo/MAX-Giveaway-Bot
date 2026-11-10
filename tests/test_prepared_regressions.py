@@ -352,3 +352,10 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.create_final_draw(self.now.date(), self.now, 5, 5, 10, random.Random(1))
 
+    def test_058(self):
+        self.user()
+        self.db.add_promo_codes("shop", ["A"])
+        self.db.request_promo(1, self.partner, self.now)
+        draw = self.db.create_final_draw(self.now.date(), self.now, 1, 0, 10, random.Random(1))
+        self.assertEqual(self.db.get_draw(draw)["entries"][0]["user_id"], 1)
+
