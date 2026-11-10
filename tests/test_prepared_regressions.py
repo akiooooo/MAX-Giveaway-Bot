@@ -161,3 +161,6 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.add_promo_codes("shop", ["  CODE-1  "])
         self.assertEqual(self.rows("SELECT code FROM promo_codes")[0]["code"], "CODE-1")
 
+    def test_023(self):
+        self.assertEqual(self.db.add_promo_codes("shop", ["", " ", "\t"]), 0)
+
