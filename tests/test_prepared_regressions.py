@@ -336,3 +336,6 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.approve_draw(999, self.now, "билеты")
 
+    def test_054(self):
+        self.assertIsNone(self.db.get_draw(999))
+
