@@ -490,3 +490,6 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.get_user_state(1)["state"], "second")
         self.assertEqual(len(self.rows("SELECT * FROM user_states")), 1)
 
+    def test_081(self):
+        self.assertEqual(self.client.base_url, "https://example.test")
+
