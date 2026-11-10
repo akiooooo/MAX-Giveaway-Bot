@@ -115,3 +115,7 @@ tests/            автоматические тесты
 ```
 
 Документация API: [получение событий](https://dev.max.ru/docs-api/methods/GET/updates), [отправка сообщений](https://dev.max.ru/docs-api/methods/POST/messages), [кнопки](https://dev.max.ru/docs-api/use-cases/sending-messages/keyboard).
+
+## Подготовленные улучшения
+
+[Список 100 проверенных изменений и порядок публикации](docs/prepared-improvements.md). Большинство шагов добавляет регрессионные тесты; исправления публикуются с проверками по расписанию.
