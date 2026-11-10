@@ -180,3 +180,11 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.request_promo(1, self.partner, self.now).code, "FIRST")
         self.assertEqual(self.db.request_promo(2, self.partner, self.now).code, "SECOND")
 
+    def test_027(self):
+        self.user(1)
+        self.user(2)
+        self.db.add_promo_codes("shop", ["ONLY"])
+        self.db.request_promo(1, self.partner, self.now)
+        result = self.db.request_promo(2, self.partner, self.now)
+        self.assertEqual((result.status, result.code), ("exhausted", None))
+
