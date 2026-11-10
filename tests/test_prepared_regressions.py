@@ -385,3 +385,10 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.submit_consent(draw, uid, True, self.now)
 
+    def test_064(self):
+        draw, uid = self.claim()
+        self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now)
+        self.db.submit_consent(draw, uid, False, self.now)
+        claim = self.rows("SELECT * FROM claims")[0]
+        self.assertEqual((claim["status"], claim["consent"]), ("declined", 0))
+
