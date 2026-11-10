@@ -332,3 +332,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.approve_draw(draw, self.now, "билеты"), 0)
         self.assertEqual(len(self.db.get_queued_notifications()), 1)
 
+    def test_053(self):
+        with self.assertRaises(ValueError):
+            self.db.approve_draw(999, self.now, "билеты")
+
