@@ -164,3 +164,7 @@ class PreparedRegressionTests(unittest.TestCase):
     def test_023(self):
         self.assertEqual(self.db.add_promo_codes("shop", ["", " ", "\t"]), 0)
 
+    def test_024(self):
+        self.assertEqual(self.db.add_promo_codes("shop", ["A", "A"]), 1)
+        self.assertEqual(self.db.add_promo_codes("shop", ["A", "B"]), 1)
+
