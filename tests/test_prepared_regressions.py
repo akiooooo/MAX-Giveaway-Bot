@@ -526,3 +526,8 @@ class PreparedRegressionTests(unittest.TestCase):
             self.client.send_message(7, "Текст", notify=False)
         self.assertFalse(call.call_args.kwargs["json"]["notify"])
 
+    def test_089(self):
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.send_message(7, "Текст")
+        self.assertNotIn("attachments", call.call_args.kwargs["json"])
+
