@@ -71,3 +71,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(row["created_at"], self.now.isoformat())
         self.assertEqual(row["last_seen_at"], (self.now + timedelta(days=1)).isoformat())
 
+    def test_005(self):
+        self.user(first_name="Алёна", last_name="О'Коннор")
+        row = self.rows("SELECT * FROM users")[0]
+        self.assertEqual((row["first_name"], row["last_name"]), ("Алёна", "О'Коннор"))
+
