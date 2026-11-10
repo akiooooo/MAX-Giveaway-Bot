@@ -590,3 +590,10 @@ class PreparedRegressionTests(unittest.TestCase):
             load_env(str(path))
             self.assertEqual(dict(os.environ), {"QUEUE_TEST_VALUE": "ok"})
 
+    def test_099(self):
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {}, clear=True):
+            path = Path(directory)/".env"
+            path.write_text('QUEUE_TEST_VALUE="Привет"', encoding="utf-8")
+            load_env(str(path))
+            self.assertEqual(os.environ["QUEUE_TEST_VALUE"], "Привет")
+
