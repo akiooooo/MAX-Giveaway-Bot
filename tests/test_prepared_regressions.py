@@ -483,3 +483,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.set_user_state(1, "claim_name", {"имя": "Алёна", "draw_id": 5}, self.now)
         self.assertEqual(self.db.get_user_state(1)["payload"], {"имя": "Алёна", "draw_id": 5})
 
+    def test_080(self):
+        self.user()
+        self.db.set_user_state(1, "first", {}, self.now)
+        self.db.set_user_state(1, "second", {"step": 2}, self.now)
+        self.assertEqual(self.db.get_user_state(1)["state"], "second")
+        self.assertEqual(len(self.rows("SELECT * FROM user_states")), 1)
+
