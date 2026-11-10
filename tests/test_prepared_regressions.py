@@ -359,3 +359,8 @@ class PreparedRegressionTests(unittest.TestCase):
         draw = self.db.create_final_draw(self.now.date(), self.now, 1, 0, 10, random.Random(1))
         self.assertEqual(self.db.get_draw(draw)["entries"][0]["user_id"], 1)
 
+    def test_059(self):
+        draw = self.db.get_draw(self.draw(5))
+        self.assertEqual(len(draw["entries"]), 5)
+        self.assertEqual(draw["participant_count"], 5)
+
