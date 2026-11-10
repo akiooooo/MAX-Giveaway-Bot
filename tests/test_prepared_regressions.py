@@ -59,3 +59,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertFalse(self.user())
         self.assertEqual(len(self.rows("SELECT * FROM users")), 1)
 
+    def test_003(self):
+        self.user(username="before")
+        self.user(username="after")
+        self.assertEqual(self.rows("SELECT * FROM users")[0]["username"], "after")
+
