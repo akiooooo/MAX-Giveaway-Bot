@@ -472,3 +472,9 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.mark_notification(1, False, self.now, "x"*1000)
         self.assertEqual(len(self.rows("SELECT error FROM notifications")[0]["error"]), 500)
 
+    def test_078(self):
+        self.user()
+        self.db.queue_push("Первая", self.now)
+        self.db.queue_push("Вторая", self.now)
+        self.assertEqual([n["text"] for n in self.db.get_queued_notifications()], ["Первая", "Вторая"])
+
