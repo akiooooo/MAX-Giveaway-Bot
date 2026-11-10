@@ -114,3 +114,10 @@ class PreparedRegressionTests(unittest.TestCase):
             self.assertEqual(second.get_stats(self.now.date())["total_users"], 1)
             second.close()
 
+    def test_012(self):
+        with self.assertRaises(RuntimeError):
+            with self.db.transaction() as conn:
+                conn.execute("UPDATE partners SET name='Ошибка'")
+                raise RuntimeError("rollback")
+        self.assertEqual(self.db.get_partner_for_day(self.now.date())["name"], "Магазин")
+
