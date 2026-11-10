@@ -219,3 +219,9 @@ class PreparedRegressionTests(unittest.TestCase):
             self.db.request_promo(1, 9999, self.now)
         self.assertEqual(self.rows("SELECT * FROM promo_requests"), [])
 
+    def test_033(self):
+        self.db.add_promo_codes("shop", ["A"])
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.db.request_promo(999, self.partner, self.now)
+        self.assertIsNone(self.rows("SELECT * FROM promo_codes")[0]["assigned_user_id"])
+
