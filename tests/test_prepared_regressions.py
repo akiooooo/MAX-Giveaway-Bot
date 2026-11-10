@@ -550,3 +550,8 @@ class PreparedRegressionTests(unittest.TestCase):
             with self.assertRaisesRegex(MaxApiError, "503"):
                 self.client.get_updates(None)
 
+    def test_093(self):
+        with patch.object(self.client.session, "request", side_effect=requests.Timeout):
+            with self.assertRaises(requests.Timeout):
+                self.client.get_updates(None)
+
