@@ -233,3 +233,9 @@ class PreparedRegressionTests(unittest.TestCase):
         partner = self.db.get_stats(self.now.date())["partners"][0]
         self.assertEqual((partner["promos_left"], partner["participants"]), (3, 2))
 
+    def test_035(self):
+        self.user()
+        self.db.add_promo_codes("shop", ["A"])
+        self.db.request_promo(1, self.partner, self.now)
+        self.assertEqual(self.rows("SELECT * FROM promo_codes")[0]["assigned_at"], self.now.isoformat())
+
