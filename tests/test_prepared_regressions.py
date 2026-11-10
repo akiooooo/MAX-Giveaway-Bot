@@ -64,3 +64,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.user(username="after")
         self.assertEqual(self.rows("SELECT * FROM users")[0]["username"], "after")
 
+    def test_004(self):
+        self.user()
+        self.db.upsert_user({"user_id": 1}, self.now + timedelta(days=1))
+        row = self.rows("SELECT * FROM users")[0]
+        self.assertEqual(row["created_at"], self.now.isoformat())
+        self.assertEqual(row["last_seen_at"], (self.now + timedelta(days=1)).isoformat())
+
