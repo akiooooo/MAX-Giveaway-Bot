@@ -531,3 +531,10 @@ class PreparedRegressionTests(unittest.TestCase):
             self.client.send_message(7, "Текст")
         self.assertNotIn("attachments", call.call_args.kwargs["json"])
 
+    def test_090(self):
+        buttons = [[{"type": "callback", "text": "Меню", "payload": "menu:how"}]]
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.send_message(7, "Привет", buttons, image_token="banner")
+        attachments = call.call_args.kwargs["json"]["attachments"]
+        self.assertEqual([a["type"] for a in attachments], ["image", "inline_keyboard"])
+
