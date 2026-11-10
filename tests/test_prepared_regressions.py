@@ -364,3 +364,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(len(draw["entries"]), 5)
         self.assertEqual(draw["participant_count"], 5)
 
+    def test_060(self):
+        selected = self.db._weighted_unique([(1, 1), (2, 5)], 20, random.Random(3))
+        self.assertEqual(set(selected), {1, 2})
+        self.assertEqual(len(selected), 2)
+
