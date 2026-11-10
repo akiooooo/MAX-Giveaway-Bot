@@ -375,3 +375,8 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.save_claim_name(draw, 2, "Иван", "Петров", self.now)
 
+    def test_062(self):
+        draw, uid = self.claim()
+        with self.assertRaises(ValueError):
+            self.db.save_claim_name(draw, uid, "Иван", "Петров", self.now + timedelta(hours=25))
+
