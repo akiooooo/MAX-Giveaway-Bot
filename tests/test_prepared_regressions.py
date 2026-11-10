@@ -343,3 +343,7 @@ class PreparedRegressionTests(unittest.TestCase):
         draw = self.draw(approve=True)
         self.assertEqual(self.db.get_draw(draw)["status"], "approved")
 
+    def test_056(self):
+        draw = self.db.create_final_draw(self.now.date(), self.now, 5, 5, 10, random.Random(1))
+        self.assertEqual(self.db.get_draw(draw)["entries"], [])
+
