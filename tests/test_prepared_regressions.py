@@ -153,3 +153,7 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.add_partner({**self.partner_data, "slug": "early", "campaign_day": "2026-10-31"})
         self.assertEqual([p["slug"] for p in self.db.get_stats(self.now.date())["partners"]], ["early", "shop"])
 
+    def test_021(self):
+        with self.assertRaisesRegex(ValueError, "unknown partner"):
+            self.db.add_promo_codes("missing", ["A"])
+
