@@ -124,3 +124,6 @@ class PreparedRegressionTests(unittest.TestCase):
     def test_013(self):
         self.assertEqual(self.db.get_partner_for_day(self.now.date())["slug"], "shop")
 
+    def test_014(self):
+        self.assertIsNone(self.db.get_partner_for_day(date(2026, 11, 2)))
+
