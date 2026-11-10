@@ -239,3 +239,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.request_promo(1, self.partner, self.now)
         self.assertEqual(self.rows("SELECT * FROM promo_codes")[0]["assigned_at"], self.now.isoformat())
 
+    def test_036(self):
+        self.user()
+        self.assertTrue(self.db.register_participation(1, self.partner, self.now))
+        self.assertFalse(self.db.register_participation(1, self.partner, self.now))
+
