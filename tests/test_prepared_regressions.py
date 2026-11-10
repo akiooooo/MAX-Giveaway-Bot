@@ -497,3 +497,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.client.session.headers["Authorization"], "test-token")
         self.assertNotIn("test-token", self.client.base_url)
 
+    def test_083(self):
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.get_updates(0)
+        self.assertEqual(call.call_args.kwargs["params"]["marker"], 0)
+
