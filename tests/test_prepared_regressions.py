@@ -244,3 +244,9 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertTrue(self.db.register_participation(1, self.partner, self.now))
         self.assertFalse(self.db.register_participation(1, self.partner, self.now))
 
+    def test_037(self):
+        self.user()
+        self.db.register_participation(1, self.partner, self.now)
+        self.assertTrue(self.db.is_participant(1, self.partner))
+        self.assertFalse(self.db.is_participant(1, 999))
+
