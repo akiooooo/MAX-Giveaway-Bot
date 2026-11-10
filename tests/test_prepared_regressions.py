@@ -521,3 +521,8 @@ class PreparedRegressionTests(unittest.TestCase):
         with patch.object(self.client, "_request", return_value={}):
             self.assertFalse(self.client.is_channel_member(-1001, 7))
 
+    def test_088(self):
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.send_message(7, "Текст", notify=False)
+        self.assertFalse(call.call_args.kwargs["json"]["notify"])
+
