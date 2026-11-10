@@ -478,3 +478,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.queue_push("Вторая", self.now)
         self.assertEqual([n["text"] for n in self.db.get_queued_notifications()], ["Первая", "Вторая"])
 
+    def test_079(self):
+        self.user()
+        self.db.set_user_state(1, "claim_name", {"имя": "Алёна", "draw_id": 5}, self.now)
+        self.assertEqual(self.db.get_user_state(1)["payload"], {"имя": "Алёна", "draw_id": 5})
+
