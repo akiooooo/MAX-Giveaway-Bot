@@ -85,3 +85,8 @@ class PreparedRegressionTests(unittest.TestCase):
         self.user(2**40)
         self.assertEqual(self.rows("SELECT user_id FROM users")[0]["user_id"], 2**40)
 
+    def test_008(self):
+        self.user()
+        self.db.upsert_user({"user_id": 2}, self.now - timedelta(days=1))
+        self.assertEqual(self.db.get_stats(self.now.date())["new_users"], 1)
+
