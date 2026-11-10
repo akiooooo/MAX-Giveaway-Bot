@@ -512,3 +512,8 @@ class PreparedRegressionTests(unittest.TestCase):
             self.client.get_updates(12, timeout=15)
         self.assertEqual(call.call_args.kwargs["params"]["timeout"], 15)
 
+    def test_086(self):
+        with patch.object(self.client, "_request", return_value={"members": [{"user_id": "7"}, {"user_id": 8}]}):
+            self.assertTrue(self.client.is_channel_member(-1001, 7))
+            self.assertFalse(self.client.is_channel_member(-1001, 9))
+
