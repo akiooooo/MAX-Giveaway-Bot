@@ -121,3 +121,6 @@ class PreparedRegressionTests(unittest.TestCase):
                 raise RuntimeError("rollback")
         self.assertEqual(self.db.get_partner_for_day(self.now.date())["name"], "Магазин")
 
+    def test_013(self):
+        self.assertEqual(self.db.get_partner_for_day(self.now.date())["slug"], "shop")
+
