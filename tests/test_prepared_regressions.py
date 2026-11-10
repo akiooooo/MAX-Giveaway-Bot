@@ -257,3 +257,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.db.register_participation(1, self.partner, self.now)
         self.assertEqual(self.db.get_user_progress(1, 10)["chances"], 1)
 
+    def test_039(self):
+        self.user()
+        self.db.add_promo_codes("shop", ["A"])
+        self.db.request_promo(1, self.partner, self.now)
+        self.db.register_participation(1, self.partner, self.now)
+        self.assertEqual(self.db.get_user_progress(1, 10)["partners"], ["Магазин"])
+
