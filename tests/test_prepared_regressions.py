@@ -459,3 +459,10 @@ class PreparedRegressionTests(unittest.TestCase):
         self.assertEqual(self.db.get_queued_notifications(), [])
         self.assertEqual(self.rows("SELECT * FROM notifications")[0]["sent_at"], self.now.isoformat())
 
+    def test_076(self):
+        self.user()
+        self.db.queue_push("Новость", self.now)
+        self.db.mark_notification(1, False, self.now, "network down")
+        row = self.rows("SELECT * FROM notifications")[0]
+        self.assertEqual((row["status"], row["sent_at"], row["error"]), ("failed", None, "network down"))
+
