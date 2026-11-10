@@ -502,3 +502,8 @@ class PreparedRegressionTests(unittest.TestCase):
             self.client.get_updates(0)
         self.assertEqual(call.call_args.kwargs["params"]["marker"], 0)
 
+    def test_084(self):
+        with patch.object(self.client, "_request", return_value={}) as call:
+            self.client.get_updates(None)
+        self.assertNotIn("marker", call.call_args.kwargs["params"])
+
