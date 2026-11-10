@@ -308,3 +308,8 @@ class PreparedRegressionTests(unittest.TestCase):
         draw = self.db.get_draw(self.draw(2))
         self.assertEqual((draw["winner_count"], draw["reserve_count"]), (2, 0))
 
+    def test_048(self):
+        draw = self.db.get_draw(self.draw(5))
+        chosen = [e["user_id"] for e in draw["entries"] if e["role"] in ("winner", "reserve")]
+        self.assertEqual(len(chosen), len(set(chosen)))
+
