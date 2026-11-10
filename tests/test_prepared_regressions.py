@@ -323,3 +323,7 @@ class PreparedRegressionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.create_daily_draw(self.now.date(), self.now, random.Random(1))
 
+    def test_051(self):
+        with self.assertRaises(ValueError):
+            self.db.create_daily_draw(date(2026, 12, 1), self.now, random.Random(1))
+
