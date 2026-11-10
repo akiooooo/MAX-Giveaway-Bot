@@ -451,3 +451,11 @@ class PreparedRegressionTests(unittest.TestCase):
             self.db.queue_push("Новость", self.now)
         self.assertEqual(len(self.db.get_queued_notifications(limit=2)), 2)
 
+    def test_075(self):
+        self.user()
+        self.db.queue_push("Новость", self.now)
+        notification = self.db.get_queued_notifications()[0]
+        self.db.mark_notification(notification["id"], True, self.now)
+        self.assertEqual(self.db.get_queued_notifications(), [])
+        self.assertEqual(self.rows("SELECT * FROM notifications")[0]["sent_at"], self.now.isoformat())
+
